@@ -905,7 +905,7 @@
      <Compile Include="Assets\Best HTTP (Pro)\Examples\SocketIO\SocketIOWePlaySample.cs" />
      <Compile Include="Assets\Best HTTP (Pro)\Examples\Websocket\WebSocketSample.cs" />
      <Compile Include="Assets\Scripts\Constants.cs" />
-     <Compile Include="Assets\Scripts\GroupsManager.cs" />
+     <Compile Include="Assets\Scripts\MeetupManager.cs" />
      <Compile Include="Assets\Scripts\Model.cs" />
      <None Include="Assets\Best HTTP (Pro)\BestHTTP\SecureProtocol\License.txt" />
      <None Include="Assets\Best HTTP (Pro)\link_android_subset.xml" />
