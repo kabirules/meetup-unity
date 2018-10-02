@@ -58,6 +58,7 @@ public class MeetupManager : MonoBehaviour {
 			// Debug.Log(member.name);
 			if (member.photo != null) {
 				Debug.Log(member.photo.highres_link);
+				Debug.Log(member.photo.thumb_link);
 			}
 		}		
 	}
