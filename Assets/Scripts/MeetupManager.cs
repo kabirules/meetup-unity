@@ -11,6 +11,7 @@ public class MeetupManager : MonoBehaviour {
 
 public Text memberInfo;
 	public GameObject layout;
+	List<m.Member> memberList;
 	// Use this for initialization
 	void Start () {
 		this.GetGroups();
@@ -22,8 +23,8 @@ public Text memberInfo;
 	}
 
 	public void GetGroups() {
-		float lat = 41.9097f; // TODO get it from GPS
-    	float lon = 12.2558f;
+		float lat = 48.1356f; // TODO get it from GPS
+    	float lon = 16.9758f;
 		string url = 	Constants.MEETUP_HOST + 
 						Constants.METHOD_GROUPS + 
                 		"?photo-host=public&page=20&sign=true" +
@@ -60,6 +61,7 @@ public Text memberInfo;
 		string memberInfo = "";
 		// Debug.Log(response.DataAsText);
 		List<m.Member> memberResponse = JsonMapper.ToObject<List<m.Member>>(response.DataAsText);
+		this.memberList = memberResponse;
 		foreach(m.Member member in memberResponse) {
 			// Debug.Log(member.name);
 			memberInfo = member.name + ", " + member.city;
@@ -77,13 +79,28 @@ public Text memberInfo;
 
     public IEnumerator LoadImage(string url) {
         Debug.Log("LoadImage");
-        Texture2D tex;
+        Texture2D tex;		
         tex = new Texture2D(4, 4, TextureFormat.DXT1, false);
+		// this.layout.GetComponent<Renderer>().material.mainTexture = tex;
         using (WWW www = new WWW(url))
         {
             yield return www;
             www.LoadImageIntoTexture(tex);
             this.layout.GetComponent<Renderer>().material.mainTexture = tex;
         }        
-    }	
+    }
+
+	public void GetRandomMember(){
+		int rnd = UnityEngine.Random.Range(0, this.memberList.Count);
+		m.Member member =  this.memberList[rnd];
+		if (member.photo != null) {
+			string memberInfo = member.name + ", " + member.city;
+			this.memberInfo.text = memberInfo;
+			string photoUrl = member.photo.highres_link != null ? member.photo.highres_link : member.photo.photo_link;
+			IEnumerator coroutine = LoadImage(photoUrl);
+			StartCoroutine(coroutine);
+		} else {
+			this.GetRandomMember();
+		}
+	}	
 }
