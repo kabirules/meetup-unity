@@ -17,8 +17,10 @@ public class ImageTest : MonoBehaviour {
          img.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
      }
 */
-    public string url = "https://secure.meetupstatic.com/photos/member/1/f/8/0/highres_273668064.jpeg";
+    // public string url = "https://secure.meetupstatic.com/photos/member/1/f/8/0/highres_273668064.jpeg";
 
+
+/*
     IEnumerator Start()
     {
         Texture2D tex;
@@ -29,5 +31,17 @@ public class ImageTest : MonoBehaviour {
             www.LoadImageIntoTexture(tex);
             GetComponent<Renderer>().material.mainTexture = tex;
         }
+    }
+*/
+    public IEnumerator LoadImage(string url) {
+        Debug.Log("LoadImage");
+        Texture2D tex;
+        tex = new Texture2D(4, 4, TextureFormat.DXT1, false);
+        using (WWW www = new WWW(url))
+        {
+            yield return www;
+            www.LoadImageIntoTexture(tex);
+            GetComponent<Renderer>().material.mainTexture = tex;
+        }        
     }
 }
